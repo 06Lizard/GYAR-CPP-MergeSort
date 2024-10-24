@@ -5,7 +5,15 @@
 #include <string>
 #include "list.h"
 
-int main() {    
+int main() {
+    List<int> list = 8;
+    list.push(2);
+    list.push(3);
+    std::cout << list.getSize();
+    list.printAll();
+}
+
+int _main() {    
     std::chrono::high_resolution_clock::time_point start;
     std::chrono::high_resolution_clock::time_point end;
     std::chrono::duration<double> durationPrint;
