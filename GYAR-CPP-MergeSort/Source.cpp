@@ -9,7 +9,19 @@ int main() {
     List<int> list = 8;
     list.push(2);
     list.push(3);
-    std::cout << list.getSize();
+    list.push(6);
+    list.push(6);
+    list.push(5);
+    list.push(2);
+    list.push(1);
+    list.push(3);
+    list.push(9);    
+
+    //list.boubbleSort();
+    list.mergeSort();
+
+    //std::cout << list.getSize();
+
     list.printAll();
 }
 
