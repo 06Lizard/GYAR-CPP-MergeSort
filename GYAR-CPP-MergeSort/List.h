@@ -3,9 +3,10 @@
 #include <string>
 #include "Node.h"
 #include "MergeSort.h"
+#include "ParallellMergeSort.h"
 
 template <typename T>
-class List : MergeSort, ParallellMergeSort {
+class List {
 private:
 	Node<T>* head; // ptr to the the first node
 public:
@@ -179,10 +180,10 @@ public:
 
 	// merge sort the list
 	void mergeSort() {
-		MergeSort::sortList(head);		
+		MergeSort<T> sort(head);		
 	}
 
 	void parallellMergeSort() {
-		ParallellMergeSort::sortList(head);
+		ParallelMergeSort<T> sort(head, 4);
 	}
 };

@@ -1,15 +1,14 @@
 #pragma once
 #include "Node.h"
 
+template <typename T>
 class MergeSort {
-protected:
-	template <typename T>
-	static void sortList(Node<T>* &head) {	
+public:
+	MergeSort(Node<T>* &head) {
 		head = mergeSort(head);
 	}
 private:
-	template <typename T>
-	static Node<T>* mergeSort(Node<T>* head) {
+	Node<T>* mergeSort(Node<T>* head) {
 		//if (head == nullptr || head->next == nullptr) 
 		if (!head || !head->next) // a bit faster and more optimized? just looks cleaner atleast, will have to check on larger scale		
 			return head;
@@ -21,8 +20,7 @@ private:
 		return merge(left, right);
 	}
 
-	template <typename T>
-	static Node<T>* split(Node<T>* head) {
+	Node<T>* split(Node<T>* head) {
 		//		if (head == nullptr || head->next == nullptr) {							// neccesery?
 		//			return nullptr;														// like didn't we just check that in Node* mergeSort 
 		//		}																						// Yes we did
@@ -41,8 +39,7 @@ private:
 		return mid;
 	}
 
-	template <typename T>
-	static Node<T>* merge(Node<T>* left, Node<T>* right) // new merge that's actually iterative.
+	Node<T>* merge(Node<T>* left, Node<T>* right) // new merge that's actually iterative.
 	{
 		//if (left == nullptr) return right;			//not sure if needed
 		//if (right == nullptr) return left;			// nor this
@@ -98,8 +95,7 @@ private:
 
 
 
-	template <typename T>
-	static Node<T>* _merge(Node<T>* left, Node<T>* right) // this is a recersive merge witch I made first and has a multitude of drawbacks...
+	Node<T>* _merge(Node<T>* left, Node<T>* right) // this is a recersive merge witch I made first and has a multitude of drawbacks...
 	{
 		if (left == nullptr) return right;
 		if (right == nullptr) return left;
@@ -112,73 +108,5 @@ private:
 			right->next = _merge(left, right->next);
 			return right;
 		}
-	}
-};
-
-
-#include "ThreadPool.h"
-class ParallellMergeSort {
-protected:
-	template <typename T>
-	static void sortList(Node<T>* &head) {
-		ThreadPool threadPool(4);
-		head = parallellMergeSort(threadPool, head);
-	}
-private:
-	template <typename T>
-	static Node<T>* parallellMergeSort(ThreadPool& threadPool, Node<T>* head) {	
-		if (!head || !head->next)
-			return head;
-
-		Node<T>* mid = split(head);
-		auto left = threadPool.enqueue(parallellMergeSort<T>, std::ref(threadPool), head); // send this to the threadpool
-		auto right = threadPool.enqueue(parallellMergeSort<T>, std::ref(threadPool), mid);//runing on threadpool too //continue this on this thread
-		
-		return merge(left.get(), right.get());
-	}
-
-	template <typename T>
-	static Node<T>* split(Node<T>* head) {
-		Node<T>* slow = head;
-		Node<T>* fast = head->next;
-		
-		while (fast && fast->next)
-		{
-			slow = slow->next;
-			fast = fast->next->next;
-		}
-
-		Node<T>* mid = slow->next;
-		slow->next = nullptr;
-		return mid;
-	}
-
-	template <typename T>
-	static Node<T>* merge(Node<T>* left, Node<T>* right)
-	{
-		// Head of merging 		
-		Node<T>* tmp = new Node<T>(); // tmp
-
-		// Pointer to track the end of the merged list		
-		Node<T>* tail = tmp;
-
-		// Merge the two lists in place
-		while (left && right)
-		{
-			if (left->value < right->value)
-			{
-				tail->next = left;
-				left = left->next;
-			}
-			else
-			{
-				tail->next = right;
-				right = right->next;
-			}
-			tail = tail->next;
-		}
-
-		tail->next = (left) ? left : right;
-		return tmp->next;
 	}
 };

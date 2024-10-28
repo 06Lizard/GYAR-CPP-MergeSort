@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +131,7 @@
     <ClCompile Include="List.cpp" />
     <ClCompile Include="MergeSort.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="ParallellMergeSort.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="ThreadPool.cpp" />
   </ItemGroup>
@@ -137,6 +139,7 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="MergeSort.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="ParallellMergeSort.h" />
     <ClInclude Include="ThreadPool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
