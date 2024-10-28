@@ -114,3 +114,71 @@ private:
 		}
 	}
 };
+
+
+#include "ThreadPool.h"
+class ParallellMergeSort {
+protected:
+	template <typename T>
+	static void sortList(Node<T>* &head) {
+		ThreadPool threadPool(4);
+		head = parallellMergeSort(threadPool, head);
+	}
+private:
+	template <typename T>
+	static Node<T>* parallellMergeSort(ThreadPool& threadPool, Node<T>* head) {	
+		if (!head || !head->next)
+			return head;
+
+		Node<T>* mid = split(head);
+		auto left = threadPool.enqueue(parallellMergeSort<T>, std::ref(threadPool), head); // send this to the threadpool
+		auto right = threadPool.enqueue(parallellMergeSort<T>, std::ref(threadPool), mid);//runing on threadpool too //continue this on this thread
+		
+		return merge(left.get(), right.get());
+	}
+
+	template <typename T>
+	static Node<T>* split(Node<T>* head) {
+		Node<T>* slow = head;
+		Node<T>* fast = head->next;
+		
+		while (fast && fast->next)
+		{
+			slow = slow->next;
+			fast = fast->next->next;
+		}
+
+		Node<T>* mid = slow->next;
+		slow->next = nullptr;
+		return mid;
+	}
+
+	template <typename T>
+	static Node<T>* merge(Node<T>* left, Node<T>* right)
+	{
+		// Head of merging 		
+		Node<T>* tmp = new Node<T>(); // tmp
+
+		// Pointer to track the end of the merged list		
+		Node<T>* tail = tmp;
+
+		// Merge the two lists in place
+		while (left && right)
+		{
+			if (left->value < right->value)
+			{
+				tail->next = left;
+				left = left->next;
+			}
+			else
+			{
+				tail->next = right;
+				right = right->next;
+			}
+			tail = tail->next;
+		}
+
+		tail->next = (left) ? left : right;
+		return tmp->next;
+	}
+};

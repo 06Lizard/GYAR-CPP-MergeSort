@@ -7,21 +7,39 @@
 
 int main() {
     List<int> list = 8;
-    list.push(2);
-    list.push(3);
-    list.push(6);
-    list.push(6);
-    list.push(5);
-    list.push(2);
+
+    //int seed = 8;
+    //int numberOfElements = 18;
+    //int maxNumberSize = 1000;
+    //
+    //std::srand(seed);
+    //for (int i = 1; i < numberOfElements; ++i) {
+    //    // Generate a random number between 0 and 1000
+    //    int randomValue = std::rand() % maxNumberSize;
+    //    list.push(randomValue);
+    //}
     list.push(1);
-    list.push(3);
-    list.push(9);    
+    list.push(8);
+    list.push(2);
+    list.push(6);
+    list.push(2);
+    list.push(0);
+    list.push(5);
+    list.push(9);
+    //list.push(7);
+    //list.push(1);
+    //list.push(3);
+    //list.push(7);
+    //list.push(2);
+    //list.push(6);
+    //list.push(3);
+    //list.push(7);
+    //list.push(3);
+    //list.push(4);
 
-    //list.boubbleSort();
-    list.mergeSort();
-
-    //std::cout << list.getSize();
-
+    std::cout << "size: " << list.getSize();
+    list.parallellMergeSort();
+    std::cout << " size: " << list.getSize() << "\n";
     list.printAll();
 }
 
@@ -45,7 +63,7 @@ int _main() {
     for (int i = 0; i < numberOfElements; ++i) {
         // Generate a random number between 0 and 1000
         int randomValue = std::rand() % maxNumberSize;
-        list.push(randomValue);                
+        list.push(randomValue);     
     }
     end = std::chrono::high_resolution_clock::now();    
     durationRandom = end - start;
@@ -60,7 +78,8 @@ int _main() {
 
     // the actual sorting of the list
     start = std::chrono::high_resolution_clock::now();
-    list.mergeSort();
+    //list.mergeSort();
+    list.parallellMergeSort();
     //list.boubbleSort();
     end = std::chrono::high_resolution_clock::now();
     sortingDuration = (end - start)*1000; //miliseconds

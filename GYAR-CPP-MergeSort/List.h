@@ -5,7 +5,7 @@
 #include "MergeSort.h"
 
 template <typename T>
-class List : MergeSort {
+class List : MergeSort, ParallellMergeSort {
 private:
 	Node<T>* head; // ptr to the the first node
 public:
@@ -180,5 +180,9 @@ public:
 	// merge sort the list
 	void mergeSort() {
 		MergeSort::sortList(head);		
+	}
+
+	void parallellMergeSort() {
+		ParallellMergeSort::sortList(head);
 	}
 };
