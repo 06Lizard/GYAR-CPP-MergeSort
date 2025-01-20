@@ -68,6 +68,7 @@ void BenchmarkingTool::run()
 
 int BenchmarkingTool::navigateMenu()
 {
+    std::cout << "\033[?25l";
     short selectedIndex = 1;
     while (true) 
     {
@@ -87,6 +88,7 @@ int BenchmarkingTool::navigateMenu()
             break;
 
         case '\r': // Enter
+            std::cout << "\033[? 25h";
             return selectedIndex;
 
         default:
