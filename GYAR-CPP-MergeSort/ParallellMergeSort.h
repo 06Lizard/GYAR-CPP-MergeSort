@@ -1,6 +1,5 @@
-#pragma once
+/*#pragma once
 #include "Node.h"
-#include "ThreadPool.h"
 
 template <typename T>
 class ParallelMergeSort {
@@ -60,4 +59,4 @@ private:
 		tail->next = (left) ? left : right;
 		return tmp->next;
 	}
-};
+};*/

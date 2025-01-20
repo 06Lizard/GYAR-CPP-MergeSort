@@ -91,6 +91,16 @@ public:
 		}
 	}
 
+	// clear will remove all the ellements in the list...
+	void clear() {
+		while (head) { // while ther's a element
+			Node<T>* current = head; // save the current first element
+			head = head->next; // make the first element the second first element
+			delete current; // delite the previously first element
+		}
+		head = nullptr; // set the current element to NULL
+	}
+
 	// get size
 	int getSize() {
 		Node<T>* current = head; // makes a pointer to the current element we wanna be looking at and starts it at head 
@@ -126,9 +136,9 @@ public:
 	// print last element
 	void printLast() {
 		if (head) {
-			Node<T> current = head;
-			while (current.next)
-				current = current.next;
+			Node<T>* current = head;
+			while (current->next)
+				current = current->next;
 			std::cout << "Tail value: " << current->value << "\n";
 		}
 		else
@@ -180,10 +190,11 @@ public:
 
 	// merge sort the list
 	void mergeSort() {
-		MergeSort<T> sort(head);		
+		//MergeSort<T> sort(head);		
+		head = MergeSort::mergeSort<T>(head);
 	}
 
-	void parallellMergeSort() {
+	/*void parallellMergeSort() {
 		ParallelMergeSort<T> sort(head, 4);
-	}
+	}*/
 };

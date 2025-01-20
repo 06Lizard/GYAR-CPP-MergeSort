@@ -1,14 +1,16 @@
 #pragma once
 #include "Node.h"
 
-template <typename T>
+//template <typename T>
 class MergeSort {
+//public:
+//	MergeSort(Node<T>* &head) {
+//		head = mergeSort(head);
+//	}
+//private:
 public:
-	MergeSort(Node<T>* &head) {
-		head = mergeSort(head);
-	}
-private:
-	Node<T>* mergeSort(Node<T>* head) {
+	template <typename T>
+	static Node<T>* mergeSort(Node<T>* head) {
 		//if (head == nullptr || head->next == nullptr) 
 		if (!head || !head->next) // a bit faster and more optimized? just looks cleaner atleast, will have to check on larger scale		
 			return head;
@@ -20,7 +22,9 @@ private:
 		return merge(left, right);
 	}
 
-	Node<T>* split(Node<T>* head) {
+private:
+	template <typename T>
+	static Node<T>* split(Node<T>* head) {
 		//		if (head == nullptr || head->next == nullptr) {							// neccesery?
 		//			return nullptr;														// like didn't we just check that in Node* mergeSort 
 		//		}																						// Yes we did
@@ -39,7 +43,8 @@ private:
 		return mid;
 	}
 
-	Node<T>* merge(Node<T>* left, Node<T>* right) // new merge that's actually iterative.
+	template <typename T>
+	static Node<T>* merge(Node<T>* left, Node<T>* right) // new merge that's actually iterative.
 	{
 		//if (left == nullptr) return right;			//not sure if needed
 		//if (right == nullptr) return left;			// nor this
@@ -95,18 +100,18 @@ private:
 
 
 
-	Node<T>* _merge(Node<T>* left, Node<T>* right) // this is a recersive merge witch I made first and has a multitude of drawbacks...
-	{
-		if (left == nullptr) return right;
-		if (right == nullptr) return left;
-
-		if (left->value < right->value) {
-			left->next = _merge(left->next, right);
-			return left;
-		}
-		else {
-			right->next = _merge(left, right->next);
-			return right;
-		}
-	}
+	//Node<T>* _merge(Node<T>* left, Node<T>* right) // this is a recersive merge witch I made first and has a multitude of drawbacks...
+	//{
+	//	if (left == nullptr) return right;
+	//	if (right == nullptr) return left;
+	//
+	//	if (left->value < right->value) {
+	//		left->next = _merge(left->next, right);
+	//		return left;
+	//	}
+	//	else {
+	//		right->next = _merge(left, right->next);
+	//		return right;
+	//	}
+	//}
 };
