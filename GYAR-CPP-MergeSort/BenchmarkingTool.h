@@ -6,7 +6,7 @@ class BenchmarkingTool
 private:
 	static const short MenueItmesNum = 11;
 
-	List<double> list;
+	List<int> list;
 
 public:
 	BenchmarkingTool() {}
