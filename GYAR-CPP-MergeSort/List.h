@@ -23,13 +23,20 @@ public:
 		{
 			head = new Node<T>(input); //	make a new node at head, sets the value of that node to the input
 		}
-		else { // if there's already a node in the list then do this instead
-			Node<T>* current = head; // set a pointer to where we're currently looking, starting at the heads position
-			while (current->next != nullptr) { // while the next part in the list isn't null. in other words while there's an node after the current one
-				current = current->next; //	the pointer "current" is switched from pointing at the current ellement we looked at to the next ellement
-			}	// this repeats till the next element after the current is the last ellement shown by the current element pointing to a nullpointer
-			current->next = new Node<T>(input);	// sets the current elements pointer to the next element (that we knew was a nullptr) point to a new Node witch will be the new last element in the list, pointing to a nullptr and having the value of the input
+		else {
+			// a lot more optimized (fixed time to add elements now even)
+			Node<T>* node = new Node<T>(input); // sets a pointer to the new node created
+			node->next = head; // sets the new nodes next ptr to the head
+			head = node; // makes the head node
+			// this makes the new element be pushed at the start of the list instead of iterating though the entire list to the end just to add one element, taking more and more time the larger it gets
 		}
+		//else { // if there's already a node in the list then do this instead
+		//	Node<T>* current = head; // set a pointer to where we're currently looking, starting at the heads position
+		//	while (current->next != nullptr) { // while the next part in the list isn't null. in other words while there's an node after the current one
+		//		current = current->next; //	the pointer "current" is switched from pointing at the current ellement we looked at to the next ellement
+		//	}	// this repeats till the next element after the current is the last ellement shown by the current element pointing to a nullpointer
+		//	current->next = new Node<T>(input);	// sets the current elements pointer to the next element (that we knew was a nullptr) point to a new Node witch will be the new last element in the list, pointing to a nullptr and having the value of the input
+		//}
 	}
 
 	// push at index
