@@ -186,9 +186,9 @@ void BenchmarkingTool::benchmarkSorts() {
     int numElements;
     std::cin >> numElements;
 
-    std::vector<double> mergeSortTimes;
 
     // benchmark merge sort
+    std::vector<double> mergeSortTimes;
     for (int i = 0; i < iterations; ++i) {
         std::cout << "Initializing list for iteration " << i + 1 << "...\n";
         addRandomElements(numElements, 0, 10000);
@@ -206,9 +206,80 @@ void BenchmarkingTool::benchmarkSorts() {
         list.clear();
     }
 
+    
+    // benchmark radix lsb sort
+    std::vector<double> radixLSBSortTimes;
+    for (int i = 0; i < iterations; ++i) {
+        std::cout << "Initializing list for iteration " << i + 1 << "...\n";
+        addRandomElements(numElements, 0, 10000);
+
+        std::cout << "Sorting with Radix LSB Sort...\n";
+        auto start = Clock::now();
+        list.radixSort_LSB();
+        auto end = Clock::now();
+
+        std::chrono::duration<double, std::milli> duration = end - start;
+        std::cout << "Iteration " << i + 1 << ": Radix LSB Sort time = " << duration.count() << " ms\n";
+
+        radixLSBSortTimes.push_back(duration.count());
+
+        list.clear();
+    }
+
+
+    // benchmark radix lsd sort
+    std::vector<double> radixLSDsortTimes;
+    for (int i = 0; i < iterations; ++i) {
+        std::cout << "Initializing list for iteration " << i + 1 << "...\n";
+        addRandomElements(numElements, 0, 10000);
+
+        std::cout << "Sorting with Radix LSD Sort...\n";
+        auto start = Clock::now();
+        list.radixSort_LSD();
+        auto end = Clock::now();
+
+        std::chrono::duration<double, std::milli> duration = end - start;
+        std::cout << "Iteration " << i + 1 << ": Radix LSD Sort time = " << duration.count() << " ms\n";
+
+        radixLSDsortTimes.push_back(duration.count());
+
+        list.clear();
+    }
+
+
+    // benchmark radix ls-byte sort
+    std::vector<double> radixLSBytesortTimes;
+    for (int i = 0; i < iterations; ++i) {
+        std::cout << "Initializing list for iteration " << i + 1 << "...\n";
+        addRandomElements(numElements, 0, 10000);
+
+        std::cout << "Sorting with Radix LSByte Sort...\n";
+        auto start = Clock::now();
+        list.radixSort_LSD();
+        auto end = Clock::now();
+
+        std::chrono::duration<double, std::milli> duration = end - start;
+        std::cout << "Iteration " << i + 1 << ": Radix LSByte Sort time = " << duration.count() << " ms\n";
+
+        radixLSBSortTimes.push_back(duration.count());
+
+        list.clear();
+    }
+
+
     // calculate average merge sort thime
     double averageMergeSortTime = std::accumulate(mergeSortTimes.begin(), mergeSortTimes.end(), 0.0) / mergeSortTimes.size();
     std::cout << "\n\nAverage Merge Sort time: " << averageMergeSortTime << " ms";
+    // calculate average radix lsb sort thime
+    double averageRadixLSBSortTime = std::accumulate(radixLSBSortTimes.begin(), radixLSBSortTimes.end(), 0.0) / radixLSBSortTimes.size();
+    std::cout << "\nAverage Radix LSB Sort time: " << averageRadixLSBSortTime << " ms";
+    // calculate average radix lsd sort thime
+    double averageRadixLSDSortTime = std::accumulate(radixLSDsortTimes.begin(), radixLSDsortTimes.end(), 0.0) / radixLSDsortTimes.size();
+    std::cout << "\nAverage Radix LSD Sort time: " << averageRadixLSDSortTime << " ms";
+    // calculate average radix ls-byte sort thime
+    double averageRadixLSByteSortTime = std::accumulate(radixLSBytesortTimes.begin(), radixLSBytesortTimes.end(), 0.0) / radixLSBytesortTimes.size();
+    std::cout << "\nAverage Radix LSByte Sort time: " << averageRadixLSByteSortTime << " ms";
+
 
     // benchmark bobble sort (single iteration)
     std::cout << "\nRunning a singular Boubble Sort iteration...";
